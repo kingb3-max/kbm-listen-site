@@ -32,7 +32,7 @@ h1 {
   border:1px solid rgba(255,255,255,.06);
   border-radius:18px;
   padding:18px;
-  margin:16px 0;
+  margin:16px 16px;
 }
 .player {
   width:100%;
