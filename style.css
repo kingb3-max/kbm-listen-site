@@ -14,7 +14,7 @@ body {
 }
 .wrap {
   max-width:900px;
-  margin:0 auto;
+  margin:24 auto;
   padding:24px;
 }
 .logo {
