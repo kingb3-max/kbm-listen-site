@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>King B Ministry Radio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="wrap">
+    <img class="logo" src="logo.png" alt="King B Ministry Radio" />
+    <h1>King B Ministry Radio</h1>
+    <p class="tag">Listen live • Worship • Teaching • Inspiration</p>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>Listen Live</h2>
+
+      <iframe
+        class="player"
+        src="https://radio.ascendant-gy.com/public/king_b_ministry_radio/embed"
+        frameborder="0"
+        allow="autoplay"
+        loading="lazy">
+      </iframe>
+
+      <div class="links">
+        <a class="btn" href="https://radio.ascendant-gy.com/public/king_b_ministry_radio" target="_blank">Open Player</a>
+        <a class="btn outline" href="https://radio.ascendant-gy.com/listen/king_b_ministry_radio/radio.mp3" target="_blank">Direct Stream</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>About</h2>
+      <p>Welcome to King B Ministry Radio — uplifting music, teaching, and encouragement.</p>
+    </section>
+
+    <section class="card">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:ascendantgy@gmail.com">ascendantgy@gmail.com</a></p>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <small>© <span id="y"></span> King B Ministry Radio</small>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
