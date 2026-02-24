@@ -26,7 +26,7 @@ h1 {
   margin:40px 40px;
   font-size:32px;
 }
-.tag { color:var(--muted); margin:0; }
+.tag { color:var(--muted); margin:40px; }
 .card {
   background:var(--card);
   border:1px solid rgba(255,255,255,.06);
