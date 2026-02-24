@@ -1,116 +1,52 @@
-/* Reset / base */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0b0b" />
+  <title>Listen Live • King B Ministry Radio</title>
+  <meta name="description" content="Listen live to King B Ministry Radio." />
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Ubuntu, sans-serif;
-  background: #0b0b0b;
-  color: #ffffff;
-}
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-/* Layout */
-.wrap {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
+<body>
+  <main class="wrap">
+    <header class="header">
+      <!-- Update the src to match your exact logo filename if needed -->
+      <img class="logo" src="logo.png" alt="King B Ministry Radio logo" />
+      <h1 class="title">King B Ministry Radio</h1>
+      <p class="tagline">Listen Live</p>
+    </header>
 
-.header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
+    <section class="card" aria-label="Radio Player">
+      <audio class="player" controls preload="none">
+        <!-- IMPORTANT: this is the stream URL from AzuraCast -->
+        <source src="https://radio.ascendant-gy.com/radio.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
 
-.logo {
-  max-width: 140px;
-  height: auto;
-  margin-bottom: 0.75rem;
-}
+      <div class="buttons">
+        <a class="btn" href="https://radio.ascendant-gy.com/radio.mp3" target="_blank" rel="noopener">
+          Open Stream
+        </a>
+        <a class="btn btn-secondary" href="https://radio.ascendant-gy.com" target="_blank" rel="noopener">
+          Station Admin
+        </a>
+      </div>
 
-.title {
-  font-size: 1.4rem;
-  margin: 0.25rem 0;
-}
+      <p class="hint">
+        Tip: On mobile, tap play once, then you can lock your screen and keep listening.
+      </p>
+    </section>
 
-.tagline {
-  font-size: 0.95rem;
-  color: #bdbdbd;
-  margin: 0;
-}
+    <footer class="footer">
+      <small>© <span id="y"></span> King B Ministry Radio</small>
+    </footer>
+  </main>
 
-/* Player card */
-.card {
-  width: 100%;
-  max-width: 420px;
-  background: #141414;
-  border-radius: 14px;
-  padding: 1.25rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-}
-
-.player {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-/* Buttons */
-.buttons {
-  display: flex;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
-.btn {
-  flex: 1;
-  text-align: center;
-  text-decoration: none;
-  padding: 0.7rem 0.6rem;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #000;
-  background: #f5c542;
-}
-
-.btn:hover {
-  background: #ffd85a;
-}
-
-.btn-secondary {
-  background: #2a2a2a;
-  color: #fff;
-}
-
-.btn-secondary:hover {
-  background: #3a3a3a;
-}
-
-.hint {
-  font-size: 0.8rem;
-  color: #9e9e9e;
-  text-align: center;
-  margin: 0.5rem 0 0;
-}
-
-/* Footer */
-.footer {
-  margin-top: 1.5rem;
-  font-size: 0.75rem;
-  color: #777;
-}
-
-/* Desktop polish (optional) */
-@media (min-width: 768px) {
-  .title {
-    font-size: 1.6rem;
-  }
-}
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
