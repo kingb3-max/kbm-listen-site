@@ -23,7 +23,7 @@ body {
   border-radius: 40px;
 }
 h1 {
-  margin:12px 0 6px;
+  margin:40px 40px;
   font-size:32px;
 }
 .tag { color:var(--muted); margin:0; }
