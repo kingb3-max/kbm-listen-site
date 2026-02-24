@@ -19,8 +19,8 @@ body {
 }
 .logo {
   width:96px;
-  height:96px;
-  border-radius:0px;
+  height: auto;
+  border-radius:0;
 }
 h1 {
   margin:12px 0 6px;
