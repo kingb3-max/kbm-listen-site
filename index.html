@@ -2,52 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>King B Ministry Radio</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0b0b" />
+  <title>Listen Live • King B Ministry Radio</title>
+  <meta name="description" content="Listen live to King B Ministry Radio." />
+
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <header class="wrap">
-    <img class="logo" src="logo.png" alt="King B Ministry Radio" />
-    <h1>King B Ministry Radio</h1>
-    <p class="tag">Listen live • Worship • Teaching • Inspiration</p>
-  </header>
-
   <main class="wrap">
-    <section class="card">
-      <h2>Listen Live</h2>
+    <header class="header">
+      <!-- Update the src to match your exact logo filename if needed -->
+      <img class="logo" src="logo.png" alt="King B Ministry Radio logo" />
+      <h1 class="title">King B Ministry Radio</h1>
+      <p class="tagline">Listen Live</p>
+    </header>
 
-      <iframe
-        class="player"
-        src="https://radio.ascendant-gy.com/public/king_b_ministry_radio/embed"
-        frameborder="0"
-        allow="autoplay"
-        loading="lazy">
-      </iframe>
+    <section class="card" aria-label="Radio Player">
+      <audio class="player" controls preload="none">
+        <!-- IMPORTANT: this is the stream URL from AzuraCast -->
+        <source src="https://radio.ascendant-gy.com/radio.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
 
-      <div class="links">
-        <a class="btn" href="https://radio.ascendant-gy.com/public/king_b_ministry_radio" target="_blank">Open Player</a>
-        <a class="btn outline" href="https://radio.ascendant-gy.com/listen/king_b_ministry_radio/radio.mp3" target="_blank">Direct Stream</a>
+      <div class="buttons">
+        <a class="btn" href="https://radio.ascendant-gy.com/radio.mp3" target="_blank" rel="noopener">
+          Open Stream
+        </a>
+        <a class="btn btn-secondary" href="https://radio.ascendant-gy.com" target="_blank" rel="noopener">
+          Station Admin
+        </a>
       </div>
+
+      <p class="hint">
+        Tip: On mobile, tap play once, then you can lock your screen and keep listening.
+      </p>
     </section>
 
-    <section class="card">
-      <h2>About</h2>
-      <p>Welcome to King B Ministry Radio — uplifting music, teaching, and encouragement.</p>
-    </section>
-
-    <section class="card">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:ascendantgy@gmail.com">ascendantgy@gmail.com</a></p>
-    </section>
+    <footer class="footer">
+      <small>© <span id="y"></span> King B Ministry Radio</small>
+    </footer>
   </main>
 
-  <footer class="wrap foot">
-    <small>© <span id="y"></span> King B Ministry Radio</small>
-  </footer>
-
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
+    document.getElementById("y").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
