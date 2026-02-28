@@ -4790,7 +4790,7 @@
                                    ]
                   },
                   {
-                      "book":  "Tts",
+                      "book":  "Titus",
                       "chapters":  [
                                        {
                                            "chapter":  1,
@@ -4871,7 +4871,7 @@
                                    ]
                   },
                   {
-                      "book":  "Jam",
+                      "book":  "James",
                       "chapters":  [
                                        {
                                            "chapter":  1,
@@ -4938,7 +4938,7 @@
                                    ]
                   },
                   {
-                      "book":  "1Jo",
+                      "book":  "1John",
                       "chapters":  [
                                        {
                                            "chapter":  1,
@@ -4963,21 +4963,21 @@
                                    ]
                   },
                   {
-                      "book":  "2Jo",
+                      "book":  "2John",
                       "chapters":  {
                                        "chapter":  1,
                                        "path":  "63_2Jo/632Jo001.mp3"
                                    }
                   },
                   {
-                      "book":  "3Jo",
+                      "book":  "3John",
                       "chapters":  {
                                        "chapter":  1,
                                        "path":  "64_3Jo/643Jo001.mp3"
                                    }
                   },
                   {
-                      "book":  "Jde",
+                      "book":  "Jude",
                       "chapters":  {
                                        "chapter":  1,
                                        "path":  "65_Jde/65Jde001.mp3"
@@ -5078,3 +5078,4 @@
                   }
               ]
 }
+
