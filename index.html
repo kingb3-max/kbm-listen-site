@@ -1,286 +1,81 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Audio Bible</title>
-  <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:0;background:#0b0f14;color:#e6edf7}
-    header{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:#0b0f14;z-index:5}
-    .wrap{display:grid;grid-template-columns:1fr;gap:12px;padding:12px;max-width:980px;margin:0 auto}
-    @media (min-width:860px){.wrap{grid-template-columns:340px 1fr}}
-    .card{background:#121826;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px}
-    input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#0f1522;color:#e6edf7}
-    .list{margin-top:10px;max-height:62vh;overflow:auto}
-    button.item{width:100%;text-align:left;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.06);background:transparent;color:#e6edf7;cursor:pointer;margin-bottom:8px}
-    button.item:hover{border-color:rgba(255,255,255,.22)}
-    .muted{color:#9fb0c7;font-size:13px}
-    .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}
-    @media (max-width:520px){.grid{grid-template-columns:repeat(4,1fr)}}
-    .chap{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.10);background:#0f1522;cursor:pointer;text-align:center;user-select:none}
-    .chap:hover{border-color:rgba(255,255,255,.25)}
-    .chap.active{border-color:rgba(255,255,255,.55)}
-    audio{width:100%;margin-top:12px}
-    .top{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
-    a.home{color:#9fb0c7;text-decoration:none}
-    a.home:hover{color:#e6edf7}
-    .row{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
-    .btn{display:inline-block;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#0f1522;color:#e6edf7;cursor:pointer}
-    .btn:hover{border-color:rgba(255,255,255,.22)}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);color:#9fb0c7;font-size:12px}
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>King B Ministry Radio</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header>
-  <div class="top">
-    <div>
-      <div style="font-weight:700">Audio Bible</div>
-      <div class="muted">Search “Genesis 1” or “Rom 8”. Tap a book → tap a chapter.</div>
-    </div>
-    <a class="home" href="./">Home</a>
-  </div>
-</header>
 
-<main class="wrap">
-  <section class="card">
-    <input id="search" placeholder="Search: book or book + chapter (e.g., Psalms 23)" />
-    <div class="row">
-      <button id="resumeBtn" class="btn" style="display:none;">▶ Resume</button>
-      <span id="resumeInfo" class="pill" style="display:none;"></span>
-    </div>
-    <div id="books" class="list"></div>
-  </section>
+  <header class="wrap">
+    <img class="logo" src="logo.png" alt="King B Ministry Radio" />
+    <h1></h1>
+    <p class="tag">The Voice of Faith, Love, Hope and Inspiration</p>
 
-  <section class="card">
-    <div id="current" style="font-weight:700">Select a book</div>
-    <div id="chapters"></div>
-    <audio id="player" controls preload="none"></audio>
-    <div id="now" class="muted"></div>
-  </section>
-</main>
+    <!-- Audio Bible button -->
+    <a href="bible.html"
+       style="
+         display:inline-block;
+         margin-top:12px;
+         padding:10px 14px;
+         border-radius:12px;
+         border:1px solid rgba(255,255,255,.15);
+         text-decoration:none;
+         color:#e6edf7;
+         background:#0f1522;
+       ">
+      📖 Audio Bible
+    </a>
+  </header>
 
-<script>
-  // ✅ Your R2 base
-  const R2_BASE = "https://pub-82dc790b7d614dff8348a8464b64dbc1.r2.dev";
+  <main class="wrap">
 
-  // localStorage key for resume
-  const RESUME_KEY = "audioBible:last";
+    <section class="card">
+      <h2>Listen Live</h2>
 
-  const elBooks = document.getElementById("books");
-  const elChapters = document.getElementById("chapters");
-  const elCurrent = document.getElementById("current");
-  const elPlayer = document.getElementById("player");
-  const elNow = document.getElementById("now");
-  const elSearch = document.getElementById("search");
-  const elResumeBtn = document.getElementById("resumeBtn");
-  const elResumeInfo = document.getElementById("resumeInfo");
+      <iframe
+        class="player"
+        src="https://radio.ascendant-gy.com/public/king_b_ministry_radio/embed"
+        frameborder="0"
+        allow="autoplay"
+        loading="lazy">
+      </iframe>
 
-  let LIB = { books: [] };
-  let currentBookObj = null;
+      <!--
+      <div class="links">
+        <a class="btn" href="https://radio.ascendant-gy.com/public/king_b_ministry_radio" target="_blank">Open Player</a>
+        <a class="btn outline" href="https://radio.ascendant-gy.com/listen/king_b_ministry_radio/radio.mp3" target="_blank">Direct Stream</a>
+      </div>
+      -->
+    </section>
 
-  function norm(s){
-    return (s || "")
-      .toLowerCase()
-      .replace(/[\.\,\:\;\(\)\[\]\{\}\-\_]/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
+    <section class="card">
+      <h2>About</h2>
+      <p>
+        Welcome to King B Ministry Radio — We are dedicated to spreading the Gospel,
+        uplifting communities and sharing messages of faith, hope and love locally
+        and globally.
+      </p>
+    </section>
 
-  function saveResume(book, chapter, path){
-    try{
-      localStorage.setItem(RESUME_KEY, JSON.stringify({
-        book, chapter, path,
-        t: Date.now()
-      }));
-      showResume();
-    }catch(e){}
-  }
+    <section class="card">
+      <h2>Contact</h2>
+      <p>
+        Email:
+        <a href="mailto:ascendantgy@gmail.com">ascendantgy@gmail.com</a>
+      </p>
+    </section>
 
-  function getResume(){
-    try{
-      const raw = localStorage.getItem(RESUME_KEY);
-      if(!raw) return null;
-      return JSON.parse(raw);
-    }catch(e){
-      return null;
-    }
-  }
+  </main>
 
-  function showResume(){
-    const r = getResume();
-    if(!r || !r.book || !r.chapter || !r.path){
-      elResumeBtn.style.display = "none";
-      elResumeInfo.style.display = "none";
-      return;
-    }
-    elResumeBtn.style.display = "inline-block";
-    elResumeInfo.style.display = "inline-block";
-    elResumeInfo.textContent = `Last: ${r.book} ${r.chapter}`;
-    elResumeBtn.onclick = () => {
-      // jump + play
-      jumpTo(r.book, r.chapter, true);
-    };
-  }
+  <footer class="wrap foot">
+    <small>© <span id="y"></span> King B Ministry Radio</small>
+  </footer>
 
-  function renderBooks(filterText="") {
-    elBooks.innerHTML = "";
-    const filter = norm(filterText);
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 
-    const list = LIB.books.filter(b => {
-      if(!filter) return true;
-      return norm(b.book).includes(filter);
-    });
-
-    list.forEach(b => {
-      const btn = document.createElement("button");
-      btn.className = "item";
-      btn.textContent = b.book;
-      btn.onclick = () => selectBook(b, null);
-      elBooks.appendChild(btn);
-    });
-  }
-
-  function clearActiveChapters(){
-    elChapters.querySelectorAll(".chap.active").forEach(x => x.classList.remove("active"));
-  }
-
-  function selectBook(b, highlightChapter) {
-    currentBookObj = b;
-    elCurrent.textContent = b.book;
-    elChapters.innerHTML = "";
-
-    const grid = document.createElement("div");
-    grid.className = "grid";
-
-    b.chapters.forEach(ch => {
-      const d = document.createElement("div");
-      d.className = "chap";
-      d.textContent = ch.chapter;
-      if (highlightChapter && Number(ch.chapter) === Number(highlightChapter)) {
-        d.classList.add("active");
-      }
-      d.onclick = () => playChapter(b.book, ch.chapter, ch.path, d);
-      grid.appendChild(d);
-    });
-
-    elChapters.appendChild(grid);
-  }
-
-  function playChapter(book, chap, path, clickedEl){
-    if(clickedEl){
-      clearActiveChapters();
-      clickedEl.classList.add("active");
-    }
-    const url = `${R2_BASE}/${path}`;
-    elPlayer.src = url;
-    elPlayer.play().catch(()=>{});
-    elNow.textContent = `Playing: ${book} ${chap}`;
-    saveResume(book, chap, path);
-  }
-
-  // Find book object by name (loose matching: exact, contains, starts-with)
-  function findBookByQuery(qBook){
-    const qb = norm(qBook);
-    if(!qb) return null;
-
-    // exact
-    let hit = LIB.books.find(b => norm(b.book) === qb);
-    if(hit) return hit;
-
-    // starts-with
-    hit = LIB.books.find(b => norm(b.book).startsWith(qb));
-    if(hit) return hit;
-
-    // contains
-    hit = LIB.books.find(b => norm(b.book).includes(qb));
-    if(hit) return hit;
-
-    return null;
-  }
-
-  // Parse search like "Genesis 12" or "Rom 8"
-  function parseBookChapter(query){
-    const q = norm(query);
-    if(!q) return {book:"", chapter:null};
-
-    // last token numeric => chapter
-    const parts = q.split(" ");
-    const last = parts[parts.length-1];
-    if(/^\d+$/.test(last)){
-      const chap = Number(last);
-      const book = parts.slice(0,-1).join(" ");
-      return {book, chapter: chap};
-    }
-    return {book: q, chapter: null};
-  }
-
-  function jumpTo(bookName, chapterNumber, autoPlay){
-    const b = findBookByQuery(bookName);
-    if(!b){
-      elCurrent.textContent = `Not found: ${bookName}`;
-      return;
-    }
-    selectBook(b, chapterNumber || null);
-
-    if(chapterNumber){
-      const ch = b.chapters.find(x => Number(x.chapter) === Number(chapterNumber));
-      if(!ch){
-        elNow.textContent = `Chapter ${chapterNumber} not found in ${b.book}`;
-        return;
-      }
-      // find the chapter element in UI to mark active
-      const el = Array.from(elChapters.querySelectorAll(".chap"))
-        .find(x => Number(x.textContent) === Number(chapterNumber));
-
-      if(autoPlay){
-        playChapter(b.book, chapterNumber, ch.path, el || null);
-      }else if(el){
-        clearActiveChapters();
-        el.classList.add("active");
-      }
-    }
-  }
-
-  async function init() {
-    const res = await fetch("./tracks.json", { cache: "no-store" });
-    if (!res.ok) {
-      elCurrent.textContent = "Error: tracks.json not found";
-      elNow.textContent = "Make sure tracks.json is in the same folder as bible.html";
-      return;
-    }
-    LIB = await res.json();
-    showResume();
-    renderBooks();
-
-    // Search behavior:
-    // - typing filters book list if only book
-    // - if book + chapter, it jumps to that book and highlights chapter
-    let searchTimer = null;
-    elSearch.addEventListener("input", e => {
-      const raw = e.target.value;
-      if(searchTimer) clearTimeout(searchTimer);
-      searchTimer = setTimeout(() => {
-        const parsed = parseBookChapter(raw);
-        if(parsed.chapter && parsed.book){
-          jumpTo(parsed.book, parsed.chapter, false);
-        } else {
-          renderBooks(parsed.book || "");
-        }
-      }, 120);
-    });
-
-    // Press Enter to auto-play if book+chapter
-    elSearch.addEventListener("keydown", e => {
-      if(e.key === "Enter"){
-        const parsed = parseBookChapter(elSearch.value);
-        if(parsed.book && parsed.chapter){
-          jumpTo(parsed.book, parsed.chapter, true);
-        }
-      }
-    });
-  }
-
-  init();
-</script>
 </body>
 </html>
