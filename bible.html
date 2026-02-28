@@ -1,86 +1,236 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Audio Bible</title>
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:0;background:#0b0f14;color:#e6edf7}
-    header{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:#0b0f14;z-index:5}
-    .wrap{display:grid;grid-template-columns:1fr;gap:12px;padding:12px;max-width:980px;margin:0 auto}
-    @media (min-width:860px){.wrap{grid-template-columns:340px 1fr}}
-    .card{background:#121826;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px}
-    input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#0f1522;color:#e6edf7}
-    .list{margin-top:10px;max-height:62vh;overflow:auto}
-    button.item{width:100%;text-align:left;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.06);background:transparent;color:#e6edf7;cursor:pointer;margin-bottom:8px}
-    button.item:hover{border-color:rgba(255,255,255,.22)}
-    .muted{color:#9fb0c7;font-size:13px}
-    .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}
-    @media (max-width:520px){.grid{grid-template-columns:repeat(4,1fr)}}
-    .chap{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.10);background:#0f1522;cursor:pointer;text-align:center;user-select:none}
-    .chap:hover{border-color:rgba(255,255,255,.25)}
-    .chap.active{border-color:rgba(255,255,255,.55)}
-    audio{width:100%;margin-top:12px}
-    .top{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
-    a.home{color:#9fb0c7;text-decoration:none}
-    a.home:hover{color:#e6edf7}
-    .row{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
-    .btn{display:inline-block;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#0f1522;color:#e6edf7;cursor:pointer}
-    .btn:hover{border-color:rgba(255,255,255,.22)}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);color:#9fb0c7;font-size:12px}
+    :root{
+      --bg:#0b0f14;
+      --card:#121826;
+      --card2:#0f1522;
+      --text:#e6edf7;
+      --muted:#9fb0c7;
+      --line:rgba(255,255,255,.08);
+      --line2:rgba(255,255,255,.14);
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --r:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit}
+    header{
+      position:sticky; top:0; z-index:10;
+      background:linear-gradient(180deg, rgba(11,15,20,.98), rgba(11,15,20,.90));
+      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .top{
+      max-width:1040px; margin:0 auto;
+      padding:12px 14px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{display:flex; flex-direction:column; gap:2px}
+    .brand .title{font-weight:800; letter-spacing:.2px}
+    .brand .sub{color:var(--muted); font-size:13px}
+    .actions{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line2);
+      background:var(--card2);
+      color:var(--text);
+      text-decoration:none;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{border-color:rgba(255,255,255,.26)}
+    .btn.ghost{background:transparent}
+    .pill{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:12px;
+      max-width: 52vw;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    main{
+      max-width:1040px;
+      margin:0 auto;
+      padding:14px;
+    }
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+    @media (min-width: 900px){
+      .grid2{grid-template-columns: 360px 1fr}
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .pad{padding:12px}
+    .search{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--line2);
+      background:var(--card2);
+      color:var(--text);
+      outline:none;
+    }
+    .search::placeholder{color:rgba(159,176,199,.7)}
+    .list{
+      margin-top:10px;
+      max-height: 62vh;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .item{
+      width:100%;
+      text-align:left;
+      padding:11px 12px;
+      margin-bottom:8px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--text);
+      cursor:pointer;
+    }
+    .item:hover{border-color:rgba(255,255,255,.25)}
+    .item.active{
+      background:rgba(74,163,255,.08);
+      border-color:rgba(74,163,255,.35);
+    }
+    .bookHead{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      padding:12px 12px;
+      border-bottom:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+    }
+    .bookHead .name{font-weight:800}
+    .bookHead .meta{color:var(--muted); font-size:13px}
+    .chapWrap{padding:12px}
+    .chapGrid{
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap:8px;
+    }
+    @media (max-width: 520px){
+      .chapGrid{grid-template-columns: repeat(4, 1fr)}
+    }
+    .chap{
+      padding:12px 8px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:var(--card2);
+      text-align:center;
+      cursor:pointer;
+      user-select:none;
+      font-weight:650;
+    }
+    .chap:hover{border-color:rgba(255,255,255,.28)}
+    .chap.active{
+      border-color:rgba(74,163,255,.55);
+      background:rgba(74,163,255,.12);
+    }
+    .playerBar{
+      position:sticky;
+      bottom:0;
+      padding:12px;
+      border-top:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(18,24,38,.65), rgba(18,24,38,.95));
+      backdrop-filter: blur(10px);
+    }
+    audio{width:100%}
+    .now{margin-top:8px; color:var(--muted); font-size:13px}
+    .hint{color:var(--muted); font-size:13px; margin-top:10px}
   </style>
 </head>
 <body>
+
 <header>
   <div class="top">
-    <div>
-      <div style="font-weight:700">Audio Bible</div>
-      <div class="muted">Search “Genesis 1” or “Rom 8”. Tap a book → tap a chapter.</div>
+    <div class="brand">
+      <div class="title">Audio Bible</div>
+      <div class="sub">Search “Genesis 1” / “Rom 8”. Tap book → tap chapter.</div>
     </div>
-    <a class="home" href="./">Home</a>
-  </div>
-</header>
-
-<main class="wrap">
-  <section class="card">
-    <input id="search" placeholder="Search: book or book + chapter (e.g., Psalms 23)" />
-    <div class="row">
+    <div class="actions">
+      <a class="btn ghost" href="./">Home</a>
       <button id="resumeBtn" class="btn" style="display:none;">▶ Resume</button>
       <span id="resumeInfo" class="pill" style="display:none;"></span>
     </div>
-    <div id="books" class="list"></div>
-  </section>
+  </div>
+</header>
 
-  <section class="card">
-    <div id="current" style="font-weight:700">Select a book</div>
-    <div id="chapters"></div>
-    <audio id="player" controls preload="none"></audio>
-    <div id="now" class="muted"></div>
-  </section>
+<main>
+  <div class="grid2">
+
+    <!-- Left: Books -->
+    <section class="card">
+      <div class="pad">
+        <input id="search" class="search" placeholder="Search book or book + chapter…" />
+        <div class="hint">Tip: press <b>Enter</b> after “Book 12” to play instantly.</div>
+        <div id="books" class="list"></div>
+      </div>
+    </section>
+
+    <!-- Right: Chapters + Player -->
+    <section class="card">
+      <div class="bookHead">
+        <div>
+          <div id="currentBook" class="name">Select a book</div>
+          <div id="currentMeta" class="meta"> </div>
+        </div>
+      </div>
+
+      <div class="chapWrap">
+        <div id="chapters"></div>
+      </div>
+
+      <div class="playerBar">
+        <audio id="player" controls preload="none"></audio>
+        <div id="now" class="now"></div>
+      </div>
+    </section>
+
+  </div>
 </main>
 
 <script>
-  // ✅ Your R2 base
   const R2_BASE = "https://pub-82dc790b7d614dff8348a8464b64dbc1.r2.dev";
-
-  // localStorage key for resume
   const RESUME_KEY = "audioBible:last";
 
   const elBooks = document.getElementById("books");
   const elChapters = document.getElementById("chapters");
-  const elCurrent = document.getElementById("current");
+  const elSearch = document.getElementById("search");
   const elPlayer = document.getElementById("player");
   const elNow = document.getElementById("now");
-  const elSearch = document.getElementById("search");
   const elResumeBtn = document.getElementById("resumeBtn");
   const elResumeInfo = document.getElementById("resumeInfo");
+  const elCurrentBook = document.getElementById("currentBook");
+  const elCurrentMeta = document.getElementById("currentMeta");
 
   let LIB = { books: [] };
   let currentBookObj = null;
 
   function norm(s){
-    return (s || "")
-      .toLowerCase()
+    return (s || "").toLowerCase()
       .replace(/[\.\,\:\;\(\)\[\]\{\}\-\_]/g, " ")
       .replace(/\s+/g, " ")
       .trim();
@@ -88,10 +238,7 @@
 
   function saveResume(book, chapter, path){
     try{
-      localStorage.setItem(RESUME_KEY, JSON.stringify({
-        book, chapter, path,
-        t: Date.now()
-      }));
+      localStorage.setItem(RESUME_KEY, JSON.stringify({ book, chapter, path, t: Date.now() }));
       showResume();
     }catch(e){}
   }
@@ -99,11 +246,8 @@
   function getResume(){
     try{
       const raw = localStorage.getItem(RESUME_KEY);
-      if(!raw) return null;
-      return JSON.parse(raw);
-    }catch(e){
-      return null;
-    }
+      return raw ? JSON.parse(raw) : null;
+    }catch(e){ return null; }
   }
 
   function showResume(){
@@ -113,23 +257,24 @@
       elResumeInfo.style.display = "none";
       return;
     }
-    elResumeBtn.style.display = "inline-block";
-    elResumeInfo.style.display = "inline-block";
+    elResumeBtn.style.display = "inline-flex";
+    elResumeInfo.style.display = "inline-flex";
     elResumeInfo.textContent = `Last: ${r.book} ${r.chapter}`;
-    elResumeBtn.onclick = () => {
-      // jump + play
-      jumpTo(r.book, r.chapter, true);
-    };
+    elResumeBtn.onclick = () => jumpTo(r.book, r.chapter, true);
+  }
+
+  function setActiveBookButton(bookName){
+    document.querySelectorAll(".item.active").forEach(x => x.classList.remove("active"));
+    const btn = Array.from(document.querySelectorAll(".item"))
+      .find(b => norm(b.textContent) === norm(bookName));
+    if(btn) btn.classList.add("active");
   }
 
   function renderBooks(filterText="") {
     elBooks.innerHTML = "";
     const filter = norm(filterText);
 
-    const list = LIB.books.filter(b => {
-      if(!filter) return true;
-      return norm(b.book).includes(filter);
-    });
+    const list = LIB.books.filter(b => !filter || norm(b.book).includes(filter));
 
     list.forEach(b => {
       const btn = document.createElement("button");
@@ -146,12 +291,14 @@
 
   function selectBook(b, highlightChapter) {
     currentBookObj = b;
-    elCurrent.textContent = b.book;
-    elChapters.innerHTML = "";
+    elCurrentBook.textContent = b.book;
+    elCurrentMeta.textContent = `${b.chapters.length} chapters`;
+    setActiveBookButton(b.book);
 
     const grid = document.createElement("div");
-    grid.className = "grid";
+    grid.className = "chapGrid";
 
+    grid.innerHTML = "";
     b.chapters.forEach(ch => {
       const d = document.createElement("div");
       d.className = "chap";
@@ -163,6 +310,7 @@
       grid.appendChild(d);
     });
 
+    elChapters.innerHTML = "";
     elChapters.appendChild(grid);
   }
 
@@ -178,46 +326,38 @@
     saveResume(book, chap, path);
   }
 
-  // Find book object by name (loose matching: exact, contains, starts-with)
   function findBookByQuery(qBook){
     const qb = norm(qBook);
     if(!qb) return null;
 
-    // exact
     let hit = LIB.books.find(b => norm(b.book) === qb);
     if(hit) return hit;
 
-    // starts-with
     hit = LIB.books.find(b => norm(b.book).startsWith(qb));
     if(hit) return hit;
 
-    // contains
     hit = LIB.books.find(b => norm(b.book).includes(qb));
     if(hit) return hit;
 
     return null;
   }
 
-  // Parse search like "Genesis 12" or "Rom 8"
   function parseBookChapter(query){
     const q = norm(query);
     if(!q) return {book:"", chapter:null};
-
-    // last token numeric => chapter
     const parts = q.split(" ");
     const last = parts[parts.length-1];
     if(/^\d+$/.test(last)){
-      const chap = Number(last);
-      const book = parts.slice(0,-1).join(" ");
-      return {book, chapter: chap};
+      return { book: parts.slice(0,-1).join(" "), chapter: Number(last) };
     }
-    return {book: q, chapter: null};
+    return { book: q, chapter: null };
   }
 
   function jumpTo(bookName, chapterNumber, autoPlay){
     const b = findBookByQuery(bookName);
     if(!b){
-      elCurrent.textContent = `Not found: ${bookName}`;
+      elCurrentBook.textContent = `Not found: ${bookName}`;
+      elCurrentMeta.textContent = "";
       return;
     }
     selectBook(b, chapterNumber || null);
@@ -228,7 +368,6 @@
         elNow.textContent = `Chapter ${chapterNumber} not found in ${b.book}`;
         return;
       }
-      // find the chapter element in UI to mark active
       const el = Array.from(elChapters.querySelectorAll(".chap"))
         .find(x => Number(x.textContent) === Number(chapterNumber));
 
@@ -244,22 +383,19 @@
   async function init() {
     const res = await fetch("./tracks.json", { cache: "no-store" });
     if (!res.ok) {
-      elCurrent.textContent = "Error: tracks.json not found";
-      elNow.textContent = "Make sure tracks.json is in the same folder as bible.html";
+      elCurrentBook.textContent = "Error: tracks.json not found";
+      elNow.textContent = "Make sure tracks.json is beside bible.html";
       return;
     }
     LIB = await res.json();
     showResume();
     renderBooks();
 
-    // Search behavior:
-    // - typing filters book list if only book
-    // - if book + chapter, it jumps to that book and highlights chapter
-    let searchTimer = null;
+    let t = null;
     elSearch.addEventListener("input", e => {
       const raw = e.target.value;
-      if(searchTimer) clearTimeout(searchTimer);
-      searchTimer = setTimeout(() => {
+      if(t) clearTimeout(t);
+      t = setTimeout(() => {
         const parsed = parseBookChapter(raw);
         if(parsed.chapter && parsed.book){
           jumpTo(parsed.book, parsed.chapter, false);
@@ -269,7 +405,6 @@
       }, 120);
     });
 
-    // Press Enter to auto-play if book+chapter
     elSearch.addEventListener("keydown", e => {
       if(e.key === "Enter"){
         const parsed = parseBookChapter(elSearch.value);
