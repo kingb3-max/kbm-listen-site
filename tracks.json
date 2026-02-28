@@ -2790,7 +2790,7 @@
                                    ]
                   },
                   {
-                      "book":  "Son",
+                      "book":  "Song of Solomon",
                       "chapters":  [
                                        {
                                            "chapter":  1,
@@ -3334,7 +3334,7 @@
                                    ]
                   },
                   {
-                      "book":  "Eze",
+                      "book":  "Ezekiel",
                       "chapters":  [
                                        {
                                            "chapter":  1,
@@ -4027,7 +4027,7 @@
                                    ]
                   },
                   {
-                      "book":  "Mar",
+                      "book":  "Mark",
                       "chapters":  [
                                        {
                                            "chapter":  1,
@@ -4197,7 +4197,7 @@
                                    ]
                   },
                   {
-                      "book":  "Joh",
+                      "book":  "John",
                       "chapters":  [
                                        {
                                            "chapter":  1,
@@ -5078,4 +5078,5 @@
                   }
               ]
 }
+
 
