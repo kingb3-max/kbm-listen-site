@@ -7,13 +7,30 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <header class="wrap">
     <img class="logo" src="logo.png" alt="King B Ministry Radio" />
     <h1></h1>
-    <p class="tag">The Voice of Faith, Love , Hope and Inspiration</p>
+    <p class="tag">The Voice of Faith, Love, Hope and Inspiration</p>
+
+    <!-- Audio Bible button -->
+    <a href="bible.html"
+       style="
+         display:inline-block;
+         margin-top:12px;
+         padding:10px 14px;
+         border-radius:12px;
+         border:1px solid rgba(255,255,255,.15);
+         text-decoration:none;
+         color:#e6edf7;
+         background:#0f1522;
+       ">
+      📖 Audio Bible
+    </a>
   </header>
 
   <main class="wrap">
+
     <section class="card">
       <h2>Listen Live</h2>
 
@@ -24,22 +41,25 @@
         allow="autoplay"
         loading="lazy">
       </iframe>
-
-      <!-- <div class="links">
-        <a class="btn" href="https://radio.ascendant-gy.com/public/king_b_ministry_radio" target="_blank">Open Player</a>
-        <a class="btn outline" href="https://radio.ascendant-gy.com/listen/king_b_ministry_radio/radio.mp3" target="_blank">Direct Stream</a>
-      </div> # -->
     </section>
 
     <section class="card">
       <h2>About</h2>
-      <p>Welcome to King B Ministry Radio — We are dedicated to spreading the Gospel, uplifting communities and sharing messages of faith, hope and love locally and globally.</p>
+      <p>
+        Welcome to King B Ministry Radio — We are dedicated to spreading the
+        Gospel, uplifting communities and sharing messages of faith, hope and
+        love locally and globally.
+      </p>
     </section>
 
     <section class="card">
       <h2>Contact</h2>
-      <p>Email: <a href="mailto:ascendantgy@gmail.com">ascendantgy@gmail.com</a></p>
+      <p>
+        Email:
+        <a href="mailto:ascendantgy@gmail.com">ascendantgy@gmail.com</a>
+      </p>
     </section>
+
   </main>
 
   <footer class="wrap foot">
@@ -49,5 +69,6 @@
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
   </script>
+
 </body>
 </html>
