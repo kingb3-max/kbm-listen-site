@@ -172,7 +172,7 @@
     </div>
     <div class="actions">
       <a class="btn ghost" href="./">Home</a>
-      <button id="resumeBtn" class="btn" style="display:none;">▶ Resume</button>
+      <button id="resumeBtn" class="btn" style="display:none;" type="button">▶ Resume</button>
       <span id="resumeInfo" class="pill" style="display:none;"></span>
     </div>
   </div>
@@ -191,7 +191,8 @@
     </section>
 
     <!-- Right: Chapters + Player -->
-    <section class="card">
+    <!-- ✅ ADDITION: id="chapterPanel" so we can scroll here on mobile -->
+    <section class="card" id="chapterPanel">
       <div class="bookHead">
         <div>
           <div id="currentBook" class="name">Select a book</div>
@@ -225,6 +226,26 @@
   const elResumeInfo = document.getElementById("resumeInfo");
   const elCurrentBook = document.getElementById("currentBook");
   const elCurrentMeta = document.getElementById("currentMeta");
+
+  // ---- FIX/DEBUG: surface script errors in-page (does not change functionality) ----
+  window.addEventListener("error", (e) => {
+    try { elNow.textContent = "Script error: " + (e?.message || "unknown"); } catch(_) {}
+  });
+  function debug(msg){
+    elNow.textContent = msg;
+  }
+
+  // ✅ ADDITION: smooth scroll to chapters panel on mobile after selecting a book
+  function scrollToChapters(){
+    const panel = document.getElementById("chapterPanel");
+    if(!panel) return;
+
+    const header = document.querySelector("header");
+    const offset = (header ? header.offsetHeight : 0) + 10;
+
+    const y = panel.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
 
   let LIB = { books: [] };
   let currentBookObj = null;
@@ -278,9 +299,13 @@
 
     list.forEach(b => {
       const btn = document.createElement("button");
+      btn.type = "button"; // ✅ safety
       btn.className = "item";
       btn.textContent = b.book;
-      btn.onclick = () => selectBook(b, null);
+      btn.onclick = () => {
+        debug("Book clicked: " + b.book);
+        selectBook(b, null);
+      };
       elBooks.appendChild(btn);
     });
   }
@@ -290,6 +315,16 @@
   }
 
   function selectBook(b, highlightChapter) {
+    if(!b){
+      debug("selectBook() got null book");
+      return;
+    }
+    if(!Array.isArray(b.chapters)){
+      debug(`No chapters found for "${b.book}".`);
+      console.log("Book object:", b);
+      return;
+    }
+
     currentBookObj = b;
     elCurrentBook.textContent = b.book;
     elCurrentMeta.textContent = `${b.chapters.length} chapters`;
@@ -312,6 +347,13 @@
 
     elChapters.innerHTML = "";
     elChapters.appendChild(grid);
+
+    debug("Chapters rendered for: " + b.book);
+
+    // ✅ ADDITION: Auto-jump to chapter section on mobile only
+    if (window.matchMedia("(max-width: 899px)").matches) {
+      scrollToChapters();
+    }
   }
 
   function playChapter(book, chap, path, clickedEl){
@@ -388,8 +430,13 @@
       return;
     }
     LIB = await res.json();
+
+    // ✅ safety if tracks.json is an array
+    if(Array.isArray(LIB)) LIB = { books: LIB };
+
     showResume();
     renderBooks();
+    debug("Loaded " + (LIB.books?.length || 0) + " books");
 
     let t = null;
     elSearch.addEventListener("input", e => {
