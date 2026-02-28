@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Audio Bible</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:0;background:#0b0f14;color:#e6edf7}
+    header{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:#0b0f14}
+    .wrap{max-width:900px;margin:0 auto;padding:14px}
+    .card{background:#121826;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px}
+    .btn{display:inline-block;margin:8px 8px 0 0;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#0f1522;color:#e6edf7;cursor:pointer}
+    .btn:hover{border-color:rgba(255,255,255,.22)}
+    audio{width:100%;margin-top:12px}
+    .muted{color:#9fb0c7;font-size:13px;margin-top:8px}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div style="font-weight:700">Audio Bible</div>
+    <div class="muted">Genesis test (we’ll add all books next)</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card">
+    <div style="font-weight:700">Genesis</div>
+    <button class="btn" onclick="play(1)">Chapter 1</button>
+    <button class="btn" onclick="play(2)">Chapter 2</button>
+    <button class="btn" onclick="play(3)">Chapter 3</button>
+
+    <audio id="player" controls preload="none"></audio>
+    <div id="now" class="muted"></div>
+  </section>
+</main>
+
+<script>
+  const BASE = "https://pub-82dc790b7d614dff8348a8464b64dbc1.r2.dev";
+  function pad3(n){ return String(n).padStart(3,'0'); }
+  function play(ch){
+    const url = `${BASE}/01_Gen/01Gen${pad3(ch)}.mp3`;
+    const p = document.getElementById('player');
+    p.src = url;
+    p.play().catch(()=>{});
+    document.getElementById('now').textContent = `Playing Genesis ${ch}`;
+  }
+</script>
+</body>
+</html>
