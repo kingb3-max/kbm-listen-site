@@ -79,7 +79,7 @@ body {
   max-width: 700px;
   margin: 28px auto 0;
   padding: 0 16px;
-  min-height: 80px;
+  min-height: 90px;
 }
 
 .verse {
@@ -142,23 +142,83 @@ body {
 
 .card h2 { margin: 0 0 10px; font-size: 18px; }
 
-/* ── Player ── */
-.player {
-  width: 100%;
-  height: 180px;
-  border-radius: 14px;
-  border: 0;
-  background: #000;
-  display: block;
-  max-width: 100%;
+/* ── Custom Live Player ── */
+.live-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 0 8px;
+  text-align: center;
 }
 
-/* ── Links ── */
+.live-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.live-badge {
+  color: #ff4444;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}
+
+.live-station {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.live-sub {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.play-btn {
+  padding: 14px 48px;
+  border-radius: 50px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .1s, opacity .2s, background .2s;
+  letter-spacing: .3px;
+}
+
+.play-btn:hover { opacity: .88; }
+.play-btn:active { transform: scale(.97); }
+.play-btn.playing { background: #e04444; }
+
+.live-links a {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.live-links a:hover { color: var(--accent); }
+
+/* ── Text links ── */
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* ── Footer ── */
-.foot { color: var(--muted); font-size: 13px; margin-top: 10px; padding-bottom: 40px; }
+.foot {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 10px;
+  padding-bottom: 40px;
+}
 
 /* ── Mobile ── */
 @media (max-width: 520px) {
@@ -166,7 +226,7 @@ a:hover { text-decoration: underline; }
   .hero { padding: 28px 18px 22px; }
   .hero-title { font-size: 20px; }
   .verse-text { font-size: 14px; }
-  .player { height: 160px; }
+  .play-btn { padding: 13px 36px; font-size: 15px; }
 }
 
 /* ── Reduced motion ── */
