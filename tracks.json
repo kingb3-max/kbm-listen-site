@@ -3704,10 +3704,10 @@
                   },
                   {
                       "book":  "Obadiah",
-                      "chapters":  {
+                      "chapters": [ {
                                        "chapter":  1,
                                        "path":  "31_Oba/31Oba001.mp3"
-                                   }
+                                   }]
                   },
                   {
                       "book":  "Jonah",
@@ -4808,10 +4808,10 @@
                   },
                   {
                       "book":  "Philemon",
-                      "chapters":  {
+                      "chapters": [ {
                                        "chapter":  1,
                                        "path":  "57_Phm/57Phm001.mp3"
-                                   }
+                                   } ]
                   },
                   {
                       "book":  "Hebrews",
@@ -4964,24 +4964,24 @@
                   },
                   {
                       "book":  "2John",
-                      "chapters":  {
+                      "chapters":  [ {
                                        "chapter":  1,
                                        "path":  "63_2Jo/632Jo001.mp3"
-                                   }
+                                   } ]
                   },
                   {
                       "book":  "3John",
-                      "chapters":  {
+                      "chapters": [ {
                                        "chapter":  1,
                                        "path":  "64_3Jo/643Jo001.mp3"
-                                   }
+                                   }]
                   },
                   {
                       "book":  "Jude",
-                      "chapters":  {
+                      "chapters": [ {
                                        "chapter":  1,
                                        "path":  "65_Jde/65Jde001.mp3"
-                                   }
+                                   } ]
                   },
                   {
                       "book":  "Revelation",
