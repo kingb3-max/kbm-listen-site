@@ -227,7 +227,28 @@ a:hover { text-decoration: underline; }
   .hero-title { font-size: 20px; }
   .verse-text { font-size: 14px; }
   .play-btn { padding: 13px 36px; font-size: 15px; }
-}
+  .live-player {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .live-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .live-badge {
+    display: block;
+  }
+  .live-station {
+    display: block;
+    font-size: 16px;
+  }
+  .live-sub {
+    display: block;
+    font-size: 12px;
+  }
+
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
