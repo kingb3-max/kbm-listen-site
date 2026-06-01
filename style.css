@@ -1,4 +1,28 @@
-/* ---------- Hero fix ---------- */
+:root {
+  --bg: #0b0f14;
+  --card: #121826;
+  --card-soft: #0f1522;
+  --text: #e6edf7;
+  --muted: #9fb0c7;
+  --accent: #4aa3ff;
+  --line: rgba(255,255,255,.08);
+  --radius: 18px;
+  --shadow: 0 12px 30px rgba(0,0,0,.35);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ── Layout ── */
+.wrap { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+/* ── Hero ── */
 .hero {
   width: 100%;
   background: #0d1520;
@@ -50,11 +74,12 @@
   text-decoration: none;
 }
 
-/* ---------- Scripture Carousel ---------- */
+/* ── Scripture Carousel ── */
 .carousel {
   max-width: 700px;
   margin: 28px auto 0;
   padding: 0 16px;
+  min-height: 80px;
 }
 
 .verse {
@@ -65,9 +90,7 @@
   animation: fadeVerse .6s ease;
 }
 
-.verse.active {
-  display: flex;
-}
+.verse.active { display: flex; }
 
 @keyframes fadeVerse {
   from { opacity: 0; transform: translateY(6px); }
@@ -105,132 +128,48 @@
   transition: background .3s;
 }
 
-.dot.active {
-  background: var(--accent);
+.dot.active { background: var(--accent); }
+
+/* ── Cards ── */
+.card {
+  background: linear-gradient(180deg, rgba(18,24,38,.95), rgba(18,24,38,.85));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
 }
 
-/* ---------- Mobile ---------- */
-@media (max-width: 520px) {
-  .hero { padding: 28px 18px 22px; }
-  .hero-title { font-size: 20px; }
-  .verse-text { font-size: 14px; }
-  .player { height: 160px; }
-}
-/* ---------- Hero fix ---------- */
-.hero {
+.card h2 { margin: 0 0 10px; font-size: 18px; }
+
+/* ── Player ── */
+.player {
   width: 100%;
-  background: #0d1520;
-  border-bottom: 1px solid var(--line);
-  padding: 36px 24px 28px;
-  text-align: center;
+  height: 180px;
+  border-radius: 14px;
+  border: 0;
+  background: #000;
+  display: block;
+  max-width: 100%;
 }
 
-.hero-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
+/* ── Links ── */
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-.hero-title {
-  margin: 6px 0 0;
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: .3px;
-}
+/* ── Footer ── */
+.foot { color: var(--muted); font-size: 13px; margin-top: 10px; padding-bottom: 40px; }
 
-.hero-tag {
-  margin: 0;
-  color: var(--muted);
-  font-size: 15px;
-}
-
-.hero-bible-btn {
-  margin-top: 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.2);
-  background: rgba(255,255,255,.07);
-  color: var(--text);
-  text-decoration: none;
-  font-size: 14px;
-  transition: background .2s;
-}
-
-.hero-bible-btn:hover {
-  background: rgba(255,255,255,.12);
-  text-decoration: none;
-}
-
-/* ---------- Scripture Carousel ---------- */
-.carousel {
-  max-width: 700px;
-  margin: 28px auto 0;
-  padding: 0 16px;
-}
-
-.verse {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  animation: fadeVerse .6s ease;
-}
-
-.verse.active {
-  display: flex;
-}
-
-@keyframes fadeVerse {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.verse-text {
-  color: var(--text);
-  font-size: 16px;
-  font-style: italic;
-  line-height: 1.6;
-  text-align: center;
-}
-
-.verse-ref {
-  color: var(--accent);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: .5px;
-}
-
-.carousel-dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.2);
-  cursor: pointer;
-  transition: background .3s;
-}
-
-.dot.active {
-  background: var(--accent);
-}
-
-/* ---------- Mobile ---------- */
+/* ── Mobile ── */
 @media (max-width: 520px) {
+  .wrap { padding: 18px; }
   .hero { padding: 28px 18px 22px; }
   .hero-title { font-size: 20px; }
   .verse-text { font-size: 14px; }
   .player { height: 160px; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
 }
