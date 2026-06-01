@@ -53,7 +53,7 @@
         </div>
         <button class="play-btn" id="playBtn" onclick="togglePlay()">▶ Play Now</button>
         <audio id="liveAudio" preload="none"></audio>
-        
+        <canvas id="visualizer" width="300" height="60" style="display:none;width:100%;height:60px;border-radius:10px;margin-top:12px;"></canvas>
       </div>
     </section>
 
@@ -132,7 +132,99 @@
         btn.classList.remove('playing');
       }
     }
-  </script>
+ <script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  const verses = document.querySelectorAll('.verse');
+  const dotsContainer = document.getElementById('carouselDots');
+  let current = 0;
+
+  verses.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    dotsContainer.appendChild(dot);
+  });
+
+  function goTo(n) {
+    verses[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = n;
+    verses[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
+  }
+
+  setInterval(() => goTo((current + 1) % verses.length), 5000);
+
+  // ── Visualizer setup ──
+  let audioCtx, analyser, source, animFrame;
+  const canvas = document.getElementById('visualizer');
+  const ctx = canvas.getContext('2d');
+
+  function startVisualizer(audio) {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      source = audioCtx.createMediaElementSource(audio);
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+    }
+    analyser.fftSize = 64;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    canvas.style.display = 'block';
+
+    function draw() {
+      animFrame = requestAnimationFrame(draw);
+      analyser.getByteFrequencyData(dataArray);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const barWidth = (canvas.width / bufferLength) * 2.2;
+      let x = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        const barHeight = (dataArray[i] / 255) * canvas.height;
+        const r = 74;
+        const g = 163;
+        const b = 255;
+        const alpha = 0.5 + (dataArray[i] / 255) * 0.5;
+        ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
+        ctx.beginPath();
+        ctx.roundRect(x, canvas.height - barHeight, barWidth - 2, barHeight, 3);
+        ctx.fill();
+        x += barWidth + 1;
+      }
+    }
+    draw();
+  }
+
+  function stopVisualizer() {
+    cancelAnimationFrame(animFrame);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.style.display = 'none';
+  }
+
+  // ── Player toggle ──
+  function togglePlay() {
+    const audio = document.getElementById('liveAudio');
+    const btn = document.getElementById('playBtn');
+    if (audio.paused) {
+      audio.src = 'https://radio.ascendant-gy.com/listen/king_b_ministry_radio/radio.mp3';
+      audio.play().then(() => {
+        startVisualizer(audio);
+        btn.textContent = '⏹ Stop';
+        btn.classList.add('playing');
+      }).catch(() => {
+        btn.textContent = '⏹ Stop';
+        btn.classList.add('playing');
+      });
+    } else {
+      audio.pause();
+      audio.src = '';
+      stopVisualizer();
+      btn.textContent = '▶ Play Now';
+      btn.classList.remove('playing');
+    }
+  }
+</script>
 
 </body>
 </html>
