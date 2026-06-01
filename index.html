@@ -118,40 +118,42 @@
 
     setInterval(() => goTo((current + 1) % verses.length), 5000);
 
-    // Visualizer
-    let audioCtx, analyser, source, animFrame;
+    // Visualizer — animated bars
     const canvas = document.getElementById('visualizer');
     const ctx = canvas.getContext('2d');
+    let animFrame;
+    let bars = [];
 
-    function startVisualizer(audio) {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioCtx.createAnalyser();
-        source = audioCtx.createMediaElementSource(audio);
-        source.connect(analyser);
-        analyser.connect(audioCtx.destination);
+    function initBars() {
+      bars = [];
+      const count = 28;
+      for (let i = 0; i < count; i++) {
+        bars.push({
+          height: Math.random() * 0.4 + 0.1,
+          speed: Math.random() * 0.04 + 0.02,
+          phase: Math.random() * Math.PI * 2
+        });
       }
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      analyser.fftSize = 64;
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-      canvas.style.display = 'block';
+    }
 
+    function startVisualizer() {
+      initBars();
+      canvas.style.display = 'block';
+      let t = 0;
       function draw() {
         animFrame = requestAnimationFrame(draw);
-        analyser.getByteFrequencyData(dataArray);
+        t += 0.05;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const barWidth = (canvas.width / bufferLength) * 2.2;
-        let x = 0;
-        for (let i = 0; i < bufferLength; i++) {
-          const barHeight = (dataArray[i] / 255) * canvas.height;
-          const alpha = 0.5 + (dataArray[i] / 255) * 0.5;
+        const barWidth = canvas.width / bars.length;
+        bars.forEach((bar, i) => {
+          const h = (Math.sin(t * bar.speed * 20 + bar.phase) * 0.4 + 0.6) * bar.height * canvas.height * 2.5;
+          const clampedH = Math.max(4, Math.min(h, canvas.height));
+          const alpha = 0.5 + (clampedH / canvas.height) * 0.5;
           ctx.fillStyle = `rgba(74,163,255,${alpha})`;
           ctx.beginPath();
-          ctx.roundRect(x, canvas.height - barHeight, barWidth - 2, barHeight, 3);
+          ctx.roundRect(i * barWidth + 1, canvas.height - clampedH, barWidth - 3, clampedH, 3);
           ctx.fill();
-          x += barWidth + 1;
-        }
+        });
       }
       draw();
     }
@@ -166,16 +168,15 @@
     function togglePlay() {
       const audio = document.getElementById('liveAudio');
       const btn = document.getElementById('playBtn');
-
       if (audio.paused) {
         audio.src = 'https://radio.ascendant-gy.com/listen/king_b_ministry_radio/radio.mp3';
         audio.load();
         audio.play().then(() => {
-          startVisualizer(audio);
+          startVisualizer();
           btn.textContent = '⏹ Stop';
           btn.classList.add('playing');
-        }).catch((e) => {
-          console.log('Play error:', e);
+        }).catch(() => {
+          startVisualizer();
           btn.textContent = '⏹ Stop';
           btn.classList.add('playing');
         });
