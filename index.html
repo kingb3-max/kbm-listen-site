@@ -203,27 +203,30 @@
   }
 
   // ── Player toggle ──
-  function togglePlay() {
-    const audio = document.getElementById('liveAudio');
-    const btn = document.getElementById('playBtn');
-    if (audio.paused) {
-      audio.src = 'https://radio.ascendant-gy.com/listen/king_b_ministry_radio/radio.mp3';
-      audio.play().then(() => {
-        startVisualizer(audio);
-        btn.textContent = '⏹ Stop';
-        btn.classList.add('playing');
-      }).catch(() => {
-        btn.textContent = '⏹ Stop';
-        btn.classList.add('playing');
-      });
-    } else {
-      audio.pause();
-      audio.src = '';
-      stopVisualizer();
-      btn.textContent = '▶ Play Now';
-      btn.classList.remove('playing');
-    }
+function togglePlay() {
+  const audio = document.getElementById('liveAudio');
+  const btn = document.getElementById('playBtn');
+
+  if (audio.paused) {
+    audio.src = 'https://radio.ascendant-gy.com/listen/king_b_ministry_radio/radio.mp3';
+    audio.load();
+    audio.play().then(() => {
+      startVisualizer(audio);
+      btn.textContent = '⏹ Stop';
+      btn.classList.add('playing');
+    }).catch((e) => {
+      console.log('Play error:', e);
+      btn.textContent = '⏹ Stop';
+      btn.classList.add('playing');
+    });
+  } else {
+    audio.pause();
+    audio.src = '';
+    stopVisualizer();
+    btn.textContent = '▶ Play Now';
+    btn.classList.remove('playing');
   }
+}
 </script>
 
 </body>
